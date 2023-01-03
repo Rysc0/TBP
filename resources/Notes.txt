@@ -1,0 +1,11 @@
+Postgres setup: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-20-04
+
+
+To start using postgres login to user and run it
+sudo -u postgres psql
+
+
+pgAdmin
+masterpw: 123456
+email: boris@email.com
+pass: 123456
