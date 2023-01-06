@@ -1,0 +1,1 @@
+drop table zaposlenik, ulogazaposlenika, status, bolovanje, godisnjiodmor, worklogentry, obracun;

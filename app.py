@@ -1,4 +1,10 @@
 import tkinter as tk
+import psycopg2 as db
+
+
+conn = db.connect(database='postgres', user='postgres', password = 'postgres', host='127.0.0.1', port='5432')
+
+print("open succ")
 
 root = tk.Tk()
 root.geometry("400x400")
