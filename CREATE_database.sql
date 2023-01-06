@@ -46,6 +46,7 @@ values
 ('Jura Klobuk', '3859764456', 1, 37, 'teskasifra14', 'jura@email.com', 1, 10, 10, 6),
 ('Boris Knezevic', '385907654', 1, 44, 'hehepass123', 'boris@email.com', 1, 20, 11, 8),
 ('Marija Cicak', '', 1, 36, 'crniRex151230', 'marija@email.com', 1, 20, 3, 4);
+('a', '', 1, 36, 'a', 'marija@email.com', 1, 20, 3, 4);
 
 
 
