@@ -6,13 +6,19 @@ from  tkcalendar import *
 
 
 
-
-
-conn = db.connect(database='postgres', user='postgres', password = 'postgres', host='127.0.0.1', port='5432')
+def executeQuery(query):
+    conn = db.connect(database='postgres', user='postgres', password = 'postgres', host='127.0.0.1', port='5432')
+    cursor = conn.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    conn.close()
+    return result
+    
 
 print("open succ")
 
 def login():
+    conn = db.connect(database='postgres', user='postgres', password = 'postgres', host='127.0.0.1', port='5432')
     # querry to see if these match
     query = """select ime_i_prezime, lozinka from zaposlenik where ime_i_prezime = '{0}' and lozinka = '{1}';""".format(
         username.get(), password.get()
@@ -20,6 +26,7 @@ def login():
     cursor = conn.cursor()
     cursor.execute(query)
     result = cursor.fetchone()
+    conn.close()
     print(result)
     if result is not None and result[0] == username.get() and result[1] == password.get():
         loginFrame.destroy()
@@ -56,7 +63,8 @@ loginButton = Button(master=loginFrame, text='Login', command=login)
 loginButton.grid(column=3, row=3, pady=10)
 
 
-
+    
+    
 
 def mainFrame():
     root.title("Tracker")
@@ -65,14 +73,43 @@ def mainFrame():
     glavniFrame.grid()
 
     InOfficeLabel = Label(master=glavniFrame, text='People in office').grid(column=0 ,columnspan=2, row=0, pady=5)
-    InOfficeListbox = Listbox(master=glavniFrame, width=40).grid(column=0, columnspan=2, row=1, pady=5, padx=5)
+    InOfficeListbox = Listbox(master=glavniFrame, width=40)
+    
+    inofficepeople = executeQuery('select ime_i_prezime from zaposlenik where idstatus = 1;')
+    inoffice_ppl = []
+    for x in inofficepeople:
+        for y in x:
+            inoffice_ppl.append(y)  
+    for i in inoffice_ppl:
+        InOfficeListbox.insert("end", i)
+    InOfficeListbox.grid(column=0, columnspan=2, row=1, pady=5, padx=5)
 
+    
+    
     BolovanjeLabel = Label(master=glavniFrame, text='Sick').grid(column=3, row=0, pady=5, padx=5)
-    BolovanjeListbox = Listbox(master=glavniFrame, width=40).grid(column=3, row=1, pady=5, padx=5)
+    BolovanjeListbox = Listbox(master=glavniFrame, width=40)
+    # BolovanjeListbox.insert(0, ppl) 
+    sick_people = executeQuery('select ime_i_prezime from zaposlenik where idstatus = 4;')
+    sick_ppl = []
+    for x in sick_people:
+        for y in x:
+            sick_ppl.append(y)  
+    for i in sick_ppl:
+        BolovanjeListbox.insert("end", i)
+    BolovanjeListbox.grid(column=3, row=1, pady=5, padx=5)
 
     GodisnjiLabel = Label(master=glavniFrame, text='Vacation').grid(column=4, row=0, pady=5, padx=5)
-    GodisnjiListbox = Listbox(master=glavniFrame, width=40).grid(column=4, row=1, pady=5, padx=5)
-    
+    GodisnjiListbox = Listbox(master=glavniFrame, width=40)
+    vacations = executeQuery("select ime_i_prezime from zaposlenik where idstatus = 3;")
+    GodisnjiListbox.grid(column=4, row=1, pady=5, padx=5)
+    vac_ppl = []
+    for x in vacations:
+        for y in x:
+            vac_ppl.append(y)  
+    for i in vac_ppl:
+        GodisnjiListbox.insert("end", i)
+
+
 
     ukupnoodradeno = Label(master=glavniFrame, text='Ukupno odrađeno sati:').grid(
         column=0, row=2, pady=15, padx=5
