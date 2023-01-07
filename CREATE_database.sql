@@ -41,10 +41,10 @@ create table zaposlenik(
 insert into zaposlenik(Ime_i_prezime, Broj_mobitela, IDUlogaZaposlenika, Satnica, Lozinka, Email, IDStatus, GodisnjiOdmorUkupno, GodisnjiOdmorPreostaloDana, RadnoVrijeme)
 values 
 ('Ivan Ivic', '', 1, 35, 'jastuk54', 'ivan@email.com', 1, 10, 10, 8),
-('Ivana Trajnk', '+3859345745', 1, 40, 'sifra11', 'ivana@email.com', 1, 10, 6, 8),
+('Ivana Trajnk', '+3859345745', 2, 40, 'sifra11', 'ivana@email.com', 1, 10, 6, 8),
 ('Petar Peric', '', 1, 33, 'password', 'petar@email.com', 1, 10, 5, 8),
-('Jura Klobuk', '3859764456', 1, 37, 'teskasifra14', 'jura@email.com', 1, 10, 10, 6),
-('Boris Knezevic', '385907654', 1, 44, 'hehepass123', 'boris@email.com', 1, 20, 11, 8),
+('Jura Klobuk', '3859764456', 3, 37, 'teskasifra14', 'jura@email.com', 1, 10, 10, 6),
+('Boris Knezevic', '385907654', 4, 44, 'hehepass123', 'boris@email.com', 1, 20, 11, 8),
 ('Marija Cicak', '', 1, 36, 'crniRex151230', 'marija@email.com', 1, 20, 3, 4),
 ('a', '', 1, 36, 'a', 'marija@email.com', 1, 20, 3, 4);
 
@@ -104,12 +104,18 @@ create trigger change_godisnji
 insert into godisnjiodmor (zaposlenikid, pocetak, kraj) 
 values (2, '31-01-2023'::TIMESTAMP, '04-02-2023'::TIMESTAMP);
 
+
 create table worklogentry(
     IDEntry SERIAL PRIMARY KEY,
     ZaposlenikID INT REFERENCES zaposlenik(ZaposlenikID) ON UPDATE CASCADE ON DELETE RESTRICT,
     Datum DATE,
     OdradeniSati FLOAT
 );
+
+insert into worklogentry (zaposlenikid, datum, odradenisati) 
+values 
+(1, '31-01-2023'::DATE, 8),
+(2, '31-01-2023'::DATE, 6);
 
 
 create table obracun(
@@ -120,5 +126,6 @@ create table obracun(
     IznosZaIsplatu FLOAT
 );
 
-
--- drop table zaposlenik, ulogazaposlenika, status, bolovanje, godisnjiodmor, worklogentry, obracun;
+insert into obracun (zaposlenikid, UkupnoOdradeniSati, SatnicaZaposlenika, IznosZaIsplatu)
+values
+(1, 60, 35, 60*35);
