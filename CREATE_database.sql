@@ -74,7 +74,7 @@ create trigger change_bolovanje
     execute procedure updateBolovanje();
 
 insert into bolovanje (zaposlenikid, pocetak, kraj)
-values (2, 'today'::TIMESTAMP,'20-12-2023'::TIMESTAMP);
+values (1, 'today'::TIMESTAMP,'20-12-2023'::TIMESTAMP);
 
 
 
@@ -84,6 +84,25 @@ create table godisnjiodmor(
     Pocetak TIMESTAMP,
     Kraj TIMESTAMP
 );
+
+
+create or replace function updateGodisnji()
+    returns trigger as $$
+        begin
+            update zaposlenik set idstatus=3 where zaposlenikid= (select zaposlenikid from godisnjiodmor where idgodisnjeg = (select idgodisnjeg from godisnjiodmor order by idgodisnjeg desc limit 1));
+            return new;
+        end;
+    $$
+    language plpgsql;
+
+
+create trigger change_godisnji
+    after insert or update on godisnjiodmor
+    for each row
+    execute procedure updateGodisnji();
+
+insert into godisnjiodmor (zaposlenikid, pocetak, kraj) 
+values (2, '31-01-2023'::TIMESTAMP, '04-02-2023'::TIMESTAMP);
 
 create table worklogentry(
     IDEntry SERIAL PRIMARY KEY,
