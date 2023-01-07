@@ -45,8 +45,9 @@ values
 ('Petar Peric', '', 1, 33, 'password', 'petar@email.com', 1, 10, 5, 8),
 ('Jura Klobuk', '3859764456', 1, 37, 'teskasifra14', 'jura@email.com', 1, 10, 10, 6),
 ('Boris Knezevic', '385907654', 1, 44, 'hehepass123', 'boris@email.com', 1, 20, 11, 8),
-('Marija Cicak', '', 1, 36, 'crniRex151230', 'marija@email.com', 1, 20, 3, 4);
+('Marija Cicak', '', 1, 36, 'crniRex151230', 'marija@email.com', 1, 20, 3, 4),
 ('a', '', 1, 36, 'a', 'marija@email.com', 1, 20, 3, 4);
+
 
 
 
@@ -56,6 +57,25 @@ create table bolovanje(
     Pocetak TIMESTAMP,
     Kraj TIMESTAMP
 );
+
+
+create or replace function updateBolovanje()
+    returns trigger as $$
+        begin
+            update zaposlenik set idstatus=4 where zaposlenikid= (select zaposlenikid from bolovanje where idbolovanja = (select idbolovanja from bolovanje order by idbolovanja desc limit 1));
+            return new;
+        end;
+    $$
+    language plpgsql;
+
+create trigger change_bolovanje
+    after insert or update on bolovanje
+    for each row
+    execute procedure updateBolovanje();
+
+insert into bolovanje (zaposlenikid, pocetak, kraj)
+values (2, 'today'::TIMESTAMP,'20-12-2023'::TIMESTAMP);
+
 
 
 create table godisnjiodmor(

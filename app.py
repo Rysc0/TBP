@@ -64,17 +64,39 @@ def mainFrame():
     glavniFrame = Frame(master=root, background='grey')
     glavniFrame.grid()
 
-    Label(master=glavniFrame, text='Ukupno odrađeno sati:').grid(
-        column=0, row=0, pady=15, padx=5
+    InOfficeLabel = Label(master=glavniFrame, text='People in office').grid(column=0 ,columnspan=2, row=0, pady=5)
+    InOfficeListbox = Listbox(master=glavniFrame, width=40).grid(column=0, columnspan=2, row=1, pady=5, padx=5)
+
+    BolovanjeLabel = Label(master=glavniFrame, text='Sick').grid(column=3, row=0, pady=5, padx=5)
+    BolovanjeListbox = Listbox(master=glavniFrame, width=40).grid(column=3, row=1, pady=5, padx=5)
+
+    GodisnjiLabel = Label(master=glavniFrame, text='Vacation').grid(column=4, row=0, pady=5, padx=5)
+    GodisnjiListbox = Listbox(master=glavniFrame, width=40).grid(column=4, row=1, pady=5, padx=5)
+    
+
+    ukupnoodradeno = Label(master=glavniFrame, text='Ukupno odrađeno sati:').grid(
+        column=0, row=2, pady=15, padx=5
     )
-    Label(master=glavniFrame, text= 0).grid(column=1, row=0, padx=5, pady=15)
+    ukupnoodradenosatiLabel = Label(master=glavniFrame, text= 0).grid(column=1, row=2, padx=5, pady=15)
+    
+    NoviUnosLabel = Label(master=glavniFrame, text="Novi zapis").grid(column=0, row=3)
+    DatumLabel = Label(master=glavniFrame, text='Datum').grid(column=0, row=4, pady=5)
+    DatumEntry = Entry(master=glavniFrame, state='disabled').grid(column=1, row=4)
+    SatiLabel = Label(master=glavniFrame, text="Sati:").grid(column=0, row=5, pady=5)
+    SatiEntry = Entry(master=glavniFrame).grid(column=1, row=5)
+    UnesiButton = Button(master=glavniFrame, text="Unesi", state='disabled').grid(column=1, row=6, pady=5)
+
+    PlacaLabel = Label(master=glavniFrame, text="Placa:").grid(column=0, row=8, pady=5)
+    PlacaEntry = Entry(master=glavniFrame, state='disabled').grid(column=1, row=8)
+
     # calendar widget
     cal = Calendar(glavniFrame, selectmode='day', year=2023, month=1, day=1)
-    cal.grid(column=5, row=0)
+    cal.grid(column=5, row=1, padx=15)
+
+
 
 
 # uvijek mora bit na kraju
-
 root.mainloop()
 
 
