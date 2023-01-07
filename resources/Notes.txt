@@ -9,3 +9,17 @@ pgAdmin
 masterpw: 123456
 email: boris@email.com
 pass: 123456
+
+
+select * from zaposlenik;
+select * from bolovanje;
+select * from godisnjiodmor;
+select * from obracun;
+select * from status;
+select * from ulogazaposlenika;
+select * from worklogentry;
+
+
+sudo apt install qttools5-dev-tools
+
+sudo apt install pyqt5-dev-tools
