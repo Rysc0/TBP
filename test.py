@@ -56,6 +56,9 @@ class Ui_MainWindow(object):
         self.UnesiBolovanjeButton = QtWidgets.QPushButton(self.BolovanjeGroupBox)
         self.UnesiBolovanjeButton.setGeometry(QtCore.QRect(100, 70, 131, 25))
         self.UnesiBolovanjeButton.setObjectName("UnesiBolovanjeButton")
+        
+        self.UnesiBolovanjeButton.clicked.connect(self.unesiBolovanje)
+
         self.splitter_6 = QtWidgets.QSplitter(self.BolovanjeGroupBox)
         self.splitter_6.setGeometry(QtCore.QRect(10, 30, 142, 26))
         self.splitter_6.setOrientation(QtCore.Qt.Horizontal)
@@ -189,6 +192,15 @@ class Ui_MainWindow(object):
         result = cursor.fetchall()
         conn.close()
         return result
+    
+    def executeQueryInsert(self, query):
+        conn = db.connect(database='postgres', user='postgres', password = 'postgres', host='127.0.0.1', port='5432')
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+        print("Inserted")
+        return 
 
     def login(self):
         username = self.usernameField.text()
@@ -202,6 +214,7 @@ class Ui_MainWindow(object):
 
 
     def clearQuerryResult(self, querryResult):
+    
         cleared = []
         for x in querryResult:
             for y in x:
@@ -209,6 +222,10 @@ class Ui_MainWindow(object):
         return cleared
 
     def populateListViews(self):
+        self.InOfficeListWidget.clear()
+        self.SickListWidget.clear()
+        self.VacationListWidget.clear()
+
         inoffice = self.executeQuery("select ime_i_prezime from zaposlenik where idstatus = 1;")
         InOffice = self.clearQuerryResult(inoffice)
         sick = self.executeQuery('select ime_i_prezime from zaposlenik where idstatus = 4;')
@@ -226,6 +243,19 @@ class Ui_MainWindow(object):
         self.BolovanjeGroupBox.setEnabled(1)
         self.UnosSatiGroupView.setEnabled(1)
         self.populateListViews()
+
+    def unesiBolovanje(self):
+        datumOd = (self.BolovanjeOdDate.date().toPyDate()).strftime("%d-%m-%Y")
+        datumDo = self.BolovanjeDoDate.date().toPyDate().strftime("%d-%m-%Y")
+
+        getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
+        userID = getUserID[0][0]
+        result = self.executeQueryInsert("insert into bolovanje (zaposlenikid, pocetak, kraj) values ({0}, '{1}'::DATE,'{2}'::DATE);".
+        format(userID, datumOd, datumDo))
+        print(result)
+
+        self.populateListViews()
+
 
 if __name__ == "__main__":
     import sys

@@ -54,8 +54,8 @@ values
 create table bolovanje(
     IDBolovanja SERIAL PRIMARY KEY,
     ZaposlenikID INT REFERENCES zaposlenik(ZaposlenikID) ON UPDATE CASCADE ON DELETE RESTRICT,
-    Pocetak TIMESTAMP,
-    Kraj TIMESTAMP
+    Pocetak DATE,
+    Kraj DATE
 );
 
 
@@ -74,7 +74,7 @@ create trigger change_bolovanje
     execute procedure updateBolovanje();
 
 insert into bolovanje (zaposlenikid, pocetak, kraj)
-values (1, 'today'::TIMESTAMP,'20-12-2023'::TIMESTAMP);
+values (1, '20-11-2013'::DATE,'20-12-2023'::DATE);
 
 
 
