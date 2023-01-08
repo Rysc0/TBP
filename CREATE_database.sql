@@ -64,7 +64,7 @@ create or replace function updateBolovanje()
 
         begin
             if NEW.pocetak <= 'today'::DATE and NEW.kraj >= 'today'::DATE then
-            update zaposlenik set idstatus=4 where zaposlenikid= (select zaposlenikid from bolovanje where idbolovanja = (select idbolovanja from bolovanje order by idbolovanja desc limit 1));
+            update zaposlenik set idstatus=4 where zaposlenikid= NEW.zaposlenikid;
             end if;
             return new;
         end;
@@ -94,7 +94,9 @@ create table godisnjiodmor(
 create or replace function updateGodisnji()
     returns trigger as $$
         begin
-            update zaposlenik set idstatus=3 where zaposlenikid= (select zaposlenikid from godisnjiodmor where idgodisnjeg = (select idgodisnjeg from godisnjiodmor order by idgodisnjeg desc limit 1));
+            if NEW.pocetak <= 'today'::DATE and NEW.kraj >= 'today'::DATE then
+            update zaposlenik set idstatus=3 where zaposlenikid= NEW.zaposlenikid;
+            end if;
             return new;
         end;
     $$
