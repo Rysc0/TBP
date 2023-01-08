@@ -116,7 +116,7 @@ values (2, '31-01-2023'::DATE, '04-02-2023'::DATE);
 create table worklogentry(
     IDEntry SERIAL PRIMARY KEY,
     ZaposlenikID INT REFERENCES zaposlenik(ZaposlenikID) ON UPDATE CASCADE ON DELETE RESTRICT,
-    Datum DATE,
+    Datum DATE NOT NULL,
     OdradeniSati FLOAT
 );
 
