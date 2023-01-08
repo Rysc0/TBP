@@ -62,8 +62,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>280</y>
+      <x>20</x>
+      <y>310</y>
       <width>391</width>
       <height>111</height>
      </rect>
@@ -101,7 +101,15 @@
        <string>Datum:</string>
       </property>
      </widget>
-     <widget class="QDateEdit" name="DatumdateEdit"/>
+     <widget class="QDateEdit" name="DatumdateEdit">
+      <property name="date">
+       <date>
+        <year>2023</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
     </widget>
     <widget class="QSplitter" name="splitter_4">
      <property name="geometry">
@@ -168,7 +176,18 @@
        <string>Od:</string>
       </property>
      </widget>
-     <widget class="QDateEdit" name="BolovanjeOdDate"/>
+     <widget class="QDateEdit" name="BolovanjeOdDate">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="date">
+       <date>
+        <year>2023</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
     </widget>
     <widget class="QSplitter" name="splitter_7">
      <property name="geometry">
@@ -187,7 +206,15 @@
        <string>Do:</string>
       </property>
      </widget>
-     <widget class="QDateEdit" name="BolovanjeDoDate"/>
+     <widget class="QDateEdit" name="BolovanjeDoDate">
+      <property name="date">
+       <date>
+        <year>2023</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QGroupBox" name="GodisnjiGroupBox">
@@ -235,7 +262,15 @@
        <string>Od:</string>
       </property>
      </widget>
-     <widget class="QDateEdit" name="GodisnjiOdDate"/>
+     <widget class="QDateEdit" name="GodisnjiOdDate">
+      <property name="date">
+       <date>
+        <year>2023</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
     </widget>
     <widget class="QSplitter" name="splitter_9">
      <property name="geometry">
@@ -254,14 +289,22 @@
        <string>Do:</string>
       </property>
      </widget>
-     <widget class="QDateEdit" name="GodisnjiDoDate"/>
+     <widget class="QDateEdit" name="GodisnjiDoDate">
+      <property name="date">
+       <date>
+        <year>2023</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QGroupBox" name="LoginGroupBox">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>410</y>
+      <y>420</y>
       <width>321</width>
       <height>131</height>
      </rect>
@@ -349,49 +392,75 @@
      </property>
     </widget>
    </widget>
-   <widget class="QSplitter" name="splitter_2">
+   <widget class="QGroupBox" name="ObracunGroupBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>220</y>
-      <width>167</width>
-      <height>17</height>
+      <y>230</y>
+      <width>391</width>
+      <height>80</height>
      </rect>
     </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+    <property name="title">
+     <string>Obracun</string>
     </property>
-    <widget class="QLabel" name="UkupnoSatiLabel">
-     <property name="text">
-      <string>Ukupno odrađeno sati: </string>
+    <widget class="QSplitter" name="splitter_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>79</width>
+       <height>17</height>
+      </rect>
      </property>
-    </widget>
-    <widget class="QLabel" name="BrojSatiLabel">
-     <property name="text">
-      <string>0</string>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
+     <widget class="QLabel" name="ZaIsplatuLabel">
+      <property name="text">
+       <string>Za isplatu:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="BrojZaIsplatuLabel">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
     </widget>
-   </widget>
-   <widget class="QSplitter" name="splitter_5">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>240</y>
-      <width>79</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-    <widget class="QLabel" name="ZaIsplatuLabel">
-     <property name="text">
-      <string>Za isplatu:</string>
+    <widget class="QSplitter" name="splitter_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>167</width>
+       <height>17</height>
+      </rect>
      </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QLabel" name="UkupnoSatiLabel">
+      <property name="text">
+       <string>Ukupno odrađeno sati: </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="BrojSatiLabel">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLabel" name="BrojZaIsplatuLabel">
-     <property name="text">
-      <string>0</string>
+    <widget class="QComboBox" name="MjesecGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>40</y>
+       <width>86</width>
+       <height>25</height>
+      </rect>
      </property>
     </widget>
    </widget>
