@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         self.VacationLabel.setObjectName("VacationLabel")
         self.UnosSatiGroupView = QtWidgets.QGroupBox(self.centralwidget)
         self.UnosSatiGroupView.setEnabled(False)
-        self.UnosSatiGroupView.setGeometry(QtCore.QRect(10, 280, 391, 111))
+        self.UnosSatiGroupView.setGeometry(QtCore.QRect(10, 310, 391, 111))
         self.UnosSatiGroupView.setObjectName("UnosSatiGroupView")
         self.UnesiSateButton = QtWidgets.QPushButton(self.UnosSatiGroupView)
         self.UnesiSateButton.setGeometry(QtCore.QRect(140, 80, 89, 25))
@@ -40,6 +40,7 @@ class Ui_MainWindow(object):
         self.DatumLabel = QtWidgets.QLabel(self.splitter_3)
         self.DatumLabel.setObjectName("DatumLabel")
         self.DatumdateEdit = QtWidgets.QDateEdit(self.splitter_3)
+        self.DatumdateEdit.setDate(QtCore.QDate(2023, 1, 1))
         self.DatumdateEdit.setObjectName("DatumdateEdit")
         self.splitter_4 = QtWidgets.QSplitter(self.UnosSatiGroupView)
         self.splitter_4.setGeometry(QtCore.QRect(200, 40, 170, 26))
@@ -66,6 +67,7 @@ class Ui_MainWindow(object):
         self.BolovanjeOdLabel = QtWidgets.QLabel(self.splitter_6)
         self.BolovanjeOdLabel.setObjectName("BolovanjeOdLabel")
         self.BolovanjeOdDate = QtWidgets.QDateEdit(self.splitter_6)
+        self.BolovanjeOdDate.setDate(QtCore.QDate(2023, 1, 1))
         self.BolovanjeOdDate.setObjectName("BolovanjeOdDate")
         self.splitter_7 = QtWidgets.QSplitter(self.BolovanjeGroupBox)
         self.splitter_7.setGeometry(QtCore.QRect(170, 30, 141, 26))
@@ -74,6 +76,7 @@ class Ui_MainWindow(object):
         self.BolovanjeDoLabel = QtWidgets.QLabel(self.splitter_7)
         self.BolovanjeDoLabel.setObjectName("BolovanjeDoLabel")
         self.BolovanjeDoDate = QtWidgets.QDateEdit(self.splitter_7)
+        self.BolovanjeDoDate.setDate(QtCore.QDate(2023, 1, 1))
         self.BolovanjeDoDate.setObjectName("BolovanjeDoDate")
         self.GodisnjiGroupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.GodisnjiGroupBox.setEnabled(False)
@@ -82,6 +85,9 @@ class Ui_MainWindow(object):
         self.UnesiGodisnjiButton = QtWidgets.QPushButton(self.GodisnjiGroupBox)
         self.UnesiGodisnjiButton.setGeometry(QtCore.QRect(110, 70, 111, 25))
         self.UnesiGodisnjiButton.setObjectName("UnesiGodisnjiButton")
+
+        self.UnesiGodisnjiButton.clicked.connect(self.unesiGodisnji)
+
         self.splitter_8 = QtWidgets.QSplitter(self.GodisnjiGroupBox)
         self.splitter_8.setGeometry(QtCore.QRect(10, 30, 142, 26))
         self.splitter_8.setOrientation(QtCore.Qt.Horizontal)
@@ -89,6 +95,7 @@ class Ui_MainWindow(object):
         self.GodisnjiOdDateLabel = QtWidgets.QLabel(self.splitter_8)
         self.GodisnjiOdDateLabel.setObjectName("GodisnjiOdDateLabel")
         self.GodisnjiOdDate = QtWidgets.QDateEdit(self.splitter_8)
+        self.GodisnjiOdDate.setDate(QtCore.QDate(2023, 1, 1))
         self.GodisnjiOdDate.setObjectName("GodisnjiOdDate")
         self.splitter_9 = QtWidgets.QSplitter(self.GodisnjiGroupBox)
         self.splitter_9.setGeometry(QtCore.QRect(170, 30, 141, 26))
@@ -97,6 +104,7 @@ class Ui_MainWindow(object):
         self.GodisnjiDoDateLabel = QtWidgets.QLabel(self.splitter_9)
         self.GodisnjiDoDateLabel.setObjectName("GodisnjiDoDateLabel")
         self.GodisnjiDoDate = QtWidgets.QDateEdit(self.splitter_9)
+        self.GodisnjiDoDate.setDate(QtCore.QDate(2023, 1, 1))
         self.GodisnjiDoDate.setObjectName("GodisnjiDoDate")
         self.LoginGroupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.LoginGroupBox.setGeometry(QtCore.QRect(20, 410, 321, 131))
@@ -130,22 +138,29 @@ class Ui_MainWindow(object):
         self.VacationListWidget = QtWidgets.QListWidget(self.splitter)
         self.VacationListWidget.setEnabled(False)
         self.VacationListWidget.setObjectName("VacationListWidget")
-        self.splitter_2 = QtWidgets.QSplitter(self.centralwidget)
-        self.splitter_2.setGeometry(QtCore.QRect(20, 220, 167, 17))
-        self.splitter_2.setOrientation(QtCore.Qt.Horizontal)
-        self.splitter_2.setObjectName("splitter_2")
-        self.UkupnoSatiLabel = QtWidgets.QLabel(self.splitter_2)
-        self.UkupnoSatiLabel.setObjectName("UkupnoSatiLabel")
-        self.BrojSatiLabel = QtWidgets.QLabel(self.splitter_2)
-        self.BrojSatiLabel.setObjectName("BrojSatiLabel")
-        self.splitter_5 = QtWidgets.QSplitter(self.centralwidget)
-        self.splitter_5.setGeometry(QtCore.QRect(20, 240, 79, 17))
+        self.ObracunGroupBox = QtWidgets.QGroupBox(self.centralwidget)
+        self.ObracunGroupBox.setEnabled(False)
+        self.ObracunGroupBox.setGeometry(QtCore.QRect(20, 230, 391, 80))
+        self.ObracunGroupBox.setObjectName("ObracunGroupBox")
+        self.splitter_5 = QtWidgets.QSplitter(self.ObracunGroupBox)
+        self.splitter_5.setGeometry(QtCore.QRect(10, 50, 79, 17))
         self.splitter_5.setOrientation(QtCore.Qt.Horizontal)
         self.splitter_5.setObjectName("splitter_5")
         self.ZaIsplatuLabel = QtWidgets.QLabel(self.splitter_5)
         self.ZaIsplatuLabel.setObjectName("ZaIsplatuLabel")
         self.BrojZaIsplatuLabel = QtWidgets.QLabel(self.splitter_5)
         self.BrojZaIsplatuLabel.setObjectName("BrojZaIsplatuLabel")
+        self.splitter_2 = QtWidgets.QSplitter(self.ObracunGroupBox)
+        self.splitter_2.setGeometry(QtCore.QRect(10, 30, 167, 17))
+        self.splitter_2.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_2.setObjectName("splitter_2")
+        self.UkupnoSatiLabel = QtWidgets.QLabel(self.splitter_2)
+        self.UkupnoSatiLabel.setObjectName("UkupnoSatiLabel")
+        self.BrojSatiLabel = QtWidgets.QLabel(self.splitter_2)
+        self.BrojSatiLabel.setObjectName("BrojSatiLabel")
+        self.MjesecComboBox = QtWidgets.QComboBox(self.ObracunGroupBox)
+        self.MjesecComboBox.setGeometry(QtCore.QRect(260, 40, 86, 25))
+        self.MjesecComboBox.setObjectName("MjesecComboBox")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 808, 22))
@@ -181,9 +196,12 @@ class Ui_MainWindow(object):
         self.passwordField.setPlaceholderText(_translate("MainWindow", "Password"))
         self.LoginButton.setText(_translate("MainWindow", "Login"))
         self.UkupnoSatiLabel.setText(_translate("MainWindow", "Ukupno odrađeno sati: "))
+        self.ObracunGroupBox.setTitle(_translate("MainWindow", "Obracun"))
         self.BrojSatiLabel.setText(_translate("MainWindow", "0"))
         self.ZaIsplatuLabel.setText(_translate("MainWindow", "Za isplatu:"))
         self.BrojZaIsplatuLabel.setText(_translate("MainWindow", "0"))
+        self.UkupnoSatiLabel.setText(_translate("MainWindow", "Ukupno odrađeno sati: "))
+        self.BrojSatiLabel.setText(_translate("MainWindow", "0"))
 
     def executeQuery(self, query):
         conn = db.connect(database='postgres', user='postgres', password = 'postgres', host='127.0.0.1', port='5432')
@@ -236,16 +254,34 @@ class Ui_MainWindow(object):
         self.SickListWidget.addItems(Sick)
         self.VacationListWidget.addItems(Vacation)
 
+    def populateCheckBox(self):
+        mjeseci = [
+            'Sijecanj',
+            'Veljaca',
+            'Ozujak',
+            'Travanj',
+            'Svibanj',
+            'Lipanj',
+            'Srpanj',
+            'Kolovoz',
+            'Rujan',
+            'Listopad',
+            'Studeni',
+            'Prosinac']
+
+        self.MjesecComboBox.addItems(mjeseci)
 
     def unlockApp(self):
         self.LoginGroupBox.setEnabled(0)
         self.GodisnjiGroupBox.setEnabled(1)
         self.BolovanjeGroupBox.setEnabled(1)
         self.UnosSatiGroupView.setEnabled(1)
+        self.ObracunGroupBox.setEnabled(1)
         self.populateListViews()
+        self.populateCheckBox()
 
     def unesiBolovanje(self):
-        datumOd = (self.BolovanjeOdDate.date().toPyDate()).strftime("%d-%m-%Y")
+        datumOd = self.BolovanjeOdDate.date().toPyDate().strftime("%d-%m-%Y")
         datumDo = self.BolovanjeDoDate.date().toPyDate().strftime("%d-%m-%Y")
 
         getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
@@ -255,6 +291,19 @@ class Ui_MainWindow(object):
         print(result)
 
         self.populateListViews()
+
+    def unesiGodisnji(self):
+        datumOd = self.GodisnjiOdDate.date().toPyDate().strftime("%d-%m-%Y")
+        datumDo = self.GodisnjiDoDate.date().toPyDate().strftime("%d-%m-%Y")
+        
+        getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
+        userID = getUserID[0][0]
+        result = self.executeQueryInsert("insert into godisnjiodmor (zaposlenikid, pocetak, kraj) values ({0}, '{1}'::DATE,'{2}'::DATE);".
+        format(userID, datumOd, datumDo))
+        print(result)
+
+        self.populateListViews()
+
 
 
 if __name__ == "__main__":
