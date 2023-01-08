@@ -54,8 +54,8 @@ values
 create table bolovanje(
     IDBolovanja SERIAL PRIMARY KEY,
     ZaposlenikID INT REFERENCES zaposlenik(ZaposlenikID) ON UPDATE CASCADE ON DELETE RESTRICT,
-    Pocetak DATE,
-    Kraj DATE
+    Pocetak DATE NOT NULL,
+    Kraj DATE NOT NULL
 );
 
 
@@ -86,8 +86,8 @@ values (1, '20-11-2013'::DATE,'20-12-2023'::DATE);
 create table godisnjiodmor(
     IDGodisnjeg SERIAL PRIMARY KEY,
     ZaposlenikID INT REFERENCES zaposlenik(ZaposlenikID) ON UPDATE CASCADE ON DELETE RESTRICT,
-    Pocetak DATE,
-    Kraj DATE
+    Pocetak DATE NOT NULL,
+    Kraj DATE NOT NULL
 );
 
 
