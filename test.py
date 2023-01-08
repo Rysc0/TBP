@@ -165,7 +165,7 @@ class Ui_MainWindow(object):
         self.MjesecComboBox.setGeometry(QtCore.QRect(210, 30, 86, 25))
         self.MjesecComboBox.setObjectName("MjesecComboBox")
 
-        self.MjesecComboBox.currentTextChanged.connect(self.updateComboBox)
+        # self.MjesecComboBox.currentTextChanged.connect(self.updateComboBox)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -180,6 +180,7 @@ class Ui_MainWindow(object):
         self.ObracunajButton = QtWidgets.QPushButton(self.ObracunGroupBox)
         self.ObracunajButton.setGeometry(QtCore.QRect(300, 30, 81, 25))
         self.ObracunajButton.setObjectName("ObracunajButton")
+        self.ObracunajButton.clicked.connect(self.obracunaj)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -330,11 +331,21 @@ class Ui_MainWindow(object):
         userID = getUserID[0][0]
         if (odradenoSati > 0):
             self.executeQueryInsert("insert into worklogentry (zaposlenikid, datum, odradenisati) values ({0}, '{1}'::DATE, {2})".format(userID, datum, odradenoSati))
-            self.updateBrojSatiLabel()
-        else:
-            self.updateBrojSatiLabel()
+        #     self.updateBrojSatiLabel()
+        # else:
+        #     self.updateBrojSatiLabel()
+
+    def obracunaj(self):
+        sati = self.updateBrojSatiLabel()
+        iznos = self.updateIznosLabel()
+        getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
+        userID = getUserID[0][0]
+        satnica = self.executeQuery("select satnica from zaposlenik where zaposlenikid = {};".format(userID))
+        self.executeQueryInsert("insert into obracun (zaposlenikid, ukupnoodradenisati, satnicazaposlenika, iznoszaisplatu) values ({0}, {1}, {2}, {3});".format(userID, sati, satnica[0][0], iznos))
 
 
+
+        
 
     def getNextMonth(self, mjeseci, odabrani):
         ls = list(mjeseci)
@@ -370,10 +381,12 @@ class Ui_MainWindow(object):
         getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
         userID = getUserID[0][0]
         ukupnoSati = self.executeQuery("select sum(odradenisati) from worklogentry where zaposlenikid = {0} and datum >= '01-{1}-2023'::DATE and datum <='01-{2}-2023'::DATE;".format( userID, mjeseci[odabraniMjesec], mjeseci[iduciMjesec]))
-        satnica = self.executeQuery("select satnica from zaposlenik where zaposlenikid = {}:".format(userID))
+        satnica = self.executeQuery("select satnica from zaposlenik where zaposlenikid = {};".format(userID))
 
         ukupniIznos = str(ukupnoSati[0][0]*satnica[0][0])
         self.BrojZaIsplatuLabel.setText(ukupniIznos)
+
+        return ukupniIznos
 
     def updateBrojSatiLabel(self):
         odabraniMjesec = self.MjesecComboBox.currentText()
@@ -399,6 +412,8 @@ class Ui_MainWindow(object):
         userID = getUserID[0][0]
         ukupnoSati = self.executeQuery("select sum(odradenisati) from worklogentry where zaposlenikid = {0} and datum >= '01-{1}-2023'::DATE and datum <='01-{2}-2023'::DATE;".format( userID, mjeseci[odabraniMjesec], mjeseci[iduciMjesec]))
         self.BrojSatiLabel.setText(str(ukupnoSati[0][0]))
+
+        return ukupnoSati[0][0]
 
 
 if __name__ == "__main__":
