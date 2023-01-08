@@ -25,38 +25,3 @@ sudo apt install qttools5-dev-tools
 sudo apt install pyqt5-dev-tools
 
 pyuic5 -x Design.ui -o test.py
-
-
-select zaposlenik.ime_i_prezime, bolovanje.pocetak, bolovanje.kraj  from zaposlenik, bolovanje where idstatus = 4 and pocetak < '21-11-2013'::DATE;
-
-select zaposlenikid from bolovanje where pocetak > '01-01-2023'::DATE and kraj < '01-02-2023'::DATE;
-
-select zaposlenik.ime_i_prezime, zaposlenik.zaposlenikid, status.status, bolovanje.pocetak, bolovanje.kraj from zaposlenik, bolovanje, status where bolovanje.pocetak > '01-01-2023'::DATE and bolovanje.kraj < '01-02-2023'::DATE and zaposlenik.idstatus = status.idstatus;
-
-
-select idbolovanja, zaposlenikid from bolovanje where pocetak <= 'today'::DATE and kraj >= 'today'::DATE;
-
-
-
-
-
-if bolovanje.pocetak <= 'today'::DATE and bolovanje.kraj >= 'today'::DATE
-update zaposlenik set idstatus = 3 where bolovanje.zaposlenikid = zaposlenik.zaposlenikid;
-
-update zaposlenik set idstatus = 3 where
-
-
-Dobiješ listu zaposlenika i njihovih statusa ako danas imaju bolovanje
-select bolovanje.zaposlenikid, zaposlenik.idstatus from bolovanje, zaposlenik where bolovanje.pocetak <= 'today'::DATE and bolovanje.kraj >= 'today'::DATE and zaposlenik.zaposlenikid = bolovanje.zaposlenikid;
-
-ako nemaju status bolovanje (4) treba ga ubacit
-
-
-
-
-
-update zaposlenik set zaposlenik.idstatus = 4 where (
-    select zaposlenik.zaposlenikid, zaposlenik.idstatus from zaposlenik where (
-        select zaposlenikid from bolovanje where pocetak<='today'::DATE and kraj >= 'today'::DATE) = zaposlenik.zaposlenikid
-        );
-
