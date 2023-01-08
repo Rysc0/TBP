@@ -394,14 +394,14 @@
    </widget>
    <widget class="QGroupBox" name="ObracunGroupBox">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>230</y>
       <width>391</width>
-      <height>80</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="title">
@@ -456,11 +456,24 @@
     <widget class="QComboBox" name="MjesecGroupBox">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>40</y>
+       <x>210</x>
+       <y>30</y>
        <width>86</width>
        <height>25</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ObracunajButton">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>30</y>
+       <width>81</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Obracunaj</string>
      </property>
     </widget>
    </widget>
