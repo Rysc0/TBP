@@ -33,6 +33,9 @@ class Ui_MainWindow(object):
         self.UnesiSateButton = QtWidgets.QPushButton(self.UnosSatiGroupView)
         self.UnesiSateButton.setGeometry(QtCore.QRect(140, 80, 89, 25))
         self.UnesiSateButton.setObjectName("UnesiSateButton")
+
+        self.UnesiSateButton.clicked.connect(self.unesiSate)
+
         self.splitter_3 = QtWidgets.QSplitter(self.UnosSatiGroupView)
         self.splitter_3.setGeometry(QtCore.QRect(20, 40, 167, 26))
         self.splitter_3.setOrientation(QtCore.Qt.Horizontal)
@@ -159,8 +162,11 @@ class Ui_MainWindow(object):
         self.BrojSatiLabel = QtWidgets.QLabel(self.splitter_2)
         self.BrojSatiLabel.setObjectName("BrojSatiLabel")
         self.MjesecComboBox = QtWidgets.QComboBox(self.ObracunGroupBox)
-        self.MjesecComboBox.setGeometry(QtCore.QRect(260, 40, 86, 25))
+        self.MjesecComboBox.setGeometry(QtCore.QRect(210, 30, 86, 25))
         self.MjesecComboBox.setObjectName("MjesecComboBox")
+
+        self.MjesecComboBox.currentTextChanged.connect(self.updateComboBox)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 808, 22))
@@ -169,6 +175,11 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+
+        self.ObracunajButton = QtWidgets.QPushButton(self.ObracunGroupBox)
+        self.ObracunajButton.setGeometry(QtCore.QRect(300, 30, 81, 25))
+        self.ObracunajButton.setObjectName("ObracunajButton")
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -202,6 +213,7 @@ class Ui_MainWindow(object):
         self.BrojZaIsplatuLabel.setText(_translate("MainWindow", "0"))
         self.UkupnoSatiLabel.setText(_translate("MainWindow", "Ukupno odrađeno sati: "))
         self.BrojSatiLabel.setText(_translate("MainWindow", "0"))
+        self.ObracunajButton.setText(_translate("MainWindow", "Obracunaj"))
 
     def executeQuery(self, query):
         conn = db.connect(database='postgres', user='postgres', password = 'postgres', host='127.0.0.1', port='5432')
@@ -254,6 +266,8 @@ class Ui_MainWindow(object):
         self.SickListWidget.addItems(Sick)
         self.VacationListWidget.addItems(Vacation)
 
+
+
     def populateCheckBox(self):
         mjeseci = [
             'Sijecanj',
@@ -304,6 +318,87 @@ class Ui_MainWindow(object):
 
         self.populateListViews()
 
+
+    def updateComboBox(self):
+        self.updateBrojSatiLabel()
+
+
+    def unesiSate(self):
+        datum = self.DatumdateEdit.date().toPyDate().strftime("%d-%m-%Y")
+        odradenoSati = self.SatiSpinBox.value()
+        getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
+        userID = getUserID[0][0]
+        if (odradenoSati > 0):
+            self.executeQueryInsert("insert into worklogentry (zaposlenikid, datum, odradenisati) values ({0}, '{1}'::DATE, {2})".format(userID, datum, odradenoSati))
+            self.updateBrojSatiLabel()
+        else:
+            self.updateBrojSatiLabel()
+
+
+
+    def getNextMonth(self, mjeseci, odabrani):
+        ls = list(mjeseci)
+        for mjesc in ls:
+            if mjesc == odabrani:
+                print(ls.index(mjesc))
+                print(ls.index(mjesc) +1)
+                ls[ls.index(mjesc)]
+                print(ls[ls.index(mjesc)+1])
+                return ls[ls.index(mjesc)+1]
+
+    
+    def updateIznosLabel(self):
+        odabraniMjesec = self.MjesecComboBox.currentText()
+
+        mjeseci = {
+            "Sijecanj": "January",
+            "Veljaca": "February",
+            "Ozujak": "March",
+            "Travanj": "April",
+            "Svibanj": "May",
+            "Lipanj": "June",
+            "Srpanj": "July",
+            "Kolovoz": "August",
+            "Rujan": "September",
+            "Listopad": "October",
+            "Studeni": "November",
+            "Prosinac": "December"
+        }
+        iduciMjesec = self.getNextMonth(mjeseci, odabraniMjesec)
+
+
+        getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
+        userID = getUserID[0][0]
+        ukupnoSati = self.executeQuery("select sum(odradenisati) from worklogentry where zaposlenikid = {0} and datum >= '01-{1}-2023'::DATE and datum <='01-{2}-2023'::DATE;".format( userID, mjeseci[odabraniMjesec], mjeseci[iduciMjesec]))
+        satnica = self.executeQuery("select satnica from zaposlenik where zaposlenikid = {}:".format(userID))
+
+        ukupniIznos = str(ukupnoSati[0][0]*satnica[0][0])
+        self.BrojZaIsplatuLabel.setText(ukupniIznos)
+
+    def updateBrojSatiLabel(self):
+        odabraniMjesec = self.MjesecComboBox.currentText()
+
+        mjeseci = {
+            "Sijecanj": "January",
+            "Veljaca": "February",
+            "Ozujak": "March",
+            "Travanj": "April",
+            "Svibanj": "May",
+            "Lipanj": "June",
+            "Srpanj": "July",
+            "Kolovoz": "August",
+            "Rujan": "September",
+            "Listopad": "October",
+            "Studeni": "November",
+            "Prosinac": "December"
+        }
+        iduciMjesec = self.getNextMonth(mjeseci, odabraniMjesec)
+
+
+        getUserID = self.executeQuery("select zaposlenikid from zaposlenik where ime_i_prezime = '{}';".format(self.usernameField.text()))
+        userID = getUserID[0][0]
+        ukupnoSati = self.executeQuery("select sum(odradenisati) from worklogentry where zaposlenikid = {0} and datum >= '01-{1}-2023'::DATE and datum <='01-{2}-2023'::DATE;".format( userID, mjeseci[odabraniMjesec], mjeseci[iduciMjesec]))
+        self.BrojSatiLabel.setText(str(ukupnoSati[0][0]))
 
 
 if __name__ == "__main__":
